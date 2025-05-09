@@ -1,0 +1,61 @@
+# Version control
+.git/
+.gitignore
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build outputs and artifacts
+build/
+dist/
+out/
+
+# Test directories and files
+src/test/
+test/
+tests/
+
+# Temporary and debug files
+tmp/
+temp/
+*.tmp
+*.log
+debug/
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+
+# Documentation
+/docs/
+*.md
+README*
+
+# Docker files
+Dockerfile*
+docker-compose*
+
+# Kotlin/Java/Gradle specific
+*.class
+*.jar
+
+# Gradle wrapper and properties (do NOT ignore gradlew or gradlew.bat)
+# gradle-wrapper.jar and gradle-wrapper.properties are needed for builds, so do not ignore gradle/wrapper/
+# Do not ignore .gradle/ per instructions
+
+# Miscellaneous
+local/
+.local/
+
+# Exclude empty session/resource directories
+.kotlin/sessions/
+src/main/resources/
+src/test/resources/
