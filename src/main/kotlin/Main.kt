@@ -37,7 +37,7 @@ fun startServer() {
 
 fun main() = runBlocking {
     PocketBaseFileClient()
-        .downloadFileAwait(System.getenv("LOBBY_COLL"), System.getenv("LOBBY_RECORD"), Path("lobby.zip"))
+        .downloadFileByKeyAwait("worlds", "lobby", Path("lobby.zip"))
     unzip("lobby.zip", "lobby")
     startServer()
 }

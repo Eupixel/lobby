@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.Call
@@ -30,11 +31,48 @@ suspend fun Call.await(): Response = suspendCancellableCoroutine { cont ->
     cont.invokeOnCancellation { cancel() }
 }
 
-class PocketBaseFileClient() {
+class PocketBaseFileClient {
     private val host: String = System.getenv("POCKET_HOST") ?: "localhost"
     private val port: Int = System.getenv("POCKET_PORT")?.toInt() ?: 8090
     private val client = OkHttpClient()
     private val json = Json { ignoreUnknownKeys = true }
+
+    suspend fun getValueAwait(collection: String, key: String): String {
+        val url = HttpUrl.Builder()
+            .scheme("http")
+            .host(host)
+            .port(port)
+            .addPathSegments("api/collections/$collection/records")
+            .addQueryParameter("filter", "key=\"$key\"")
+            .build()
+        val resp = client.newCall(Request.Builder().url(url).build()).await()
+        if (!resp.isSuccessful) throw IOException("Record lookup failed: ${resp.code}")
+        val items = json.parseToJsonElement(resp.body!!.string())
+            .jsonObject["items"]!!.jsonArray
+        if (items.isEmpty()) throw IOException("No record found for key: $key")
+        return items[0].jsonObject["value"]!!.jsonPrimitive.content
+    }
+
+    private suspend fun getRecordIdAwait(collection: String, key: String): String {
+        val url = HttpUrl.Builder()
+            .scheme("http")
+            .host(host)
+            .port(port)
+            .addPathSegments("api/collections/$collection/records")
+            .addQueryParameter("filter", "key=\"$key\"")
+            .build()
+        val resp = client.newCall(Request.Builder().url(url).build()).await()
+        if (!resp.isSuccessful) throw IOException("Record lookup failed: ${resp.code}")
+        val items = json.parseToJsonElement(resp.body!!.string())
+            .jsonObject["items"]!!.jsonArray
+        if (items.isEmpty()) throw IOException("No record found for key: $key")
+        return items[0].jsonObject["id"]!!.jsonPrimitive.content
+    }
+
+    suspend fun downloadFileByKeyAwait(collection: String, key: String, destFile: Path) {
+        val recordId = getRecordIdAwait(collection, key)
+        downloadFileAwait(collection, recordId, destFile)
+    }
 
     suspend fun downloadFileAwait(collection: String, recordId: String, destFile: Path) {
         val recordUrl = HttpUrl.Builder()
