@@ -30,10 +30,9 @@ suspend fun Call.await(): Response = suspendCancellableCoroutine { cont ->
     cont.invokeOnCancellation { cancel() }
 }
 
-class PocketBaseFileClient(
-    private val host: String = "159.69.91.8",
-    private val port: Int = 8090
-) {
+class PocketBaseFileClient() {
+    private val host: String = System.getenv("POCKET_HOST") ?: "localhost"
+    private val port: Int = System.getenv("POCKET_PORT")?.toInt() ?: 8090
     private val client = OkHttpClient()
     private val json = Json { ignoreUnknownKeys = true }
 
