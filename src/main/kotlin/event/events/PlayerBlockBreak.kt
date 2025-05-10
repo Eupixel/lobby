@@ -7,5 +7,3 @@ class PlayerBlockBreak(event: PlayerBlockBreakEvent) {
         event.isCancelled = true
     }
 }
-
-

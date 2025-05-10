@@ -1,7 +1,7 @@
 package net.eupixel.event.events
 
 import kotlinx.coroutines.runBlocking
-import net.eupixel.util.PocketBaseFileClient
+import net.eupixel.util.WebDavClient
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
 import net.minestom.server.instance.InstanceContainer
@@ -12,8 +12,8 @@ class AsyncPlayerConfiguration(event: AsyncPlayerConfigurationEvent, instanceCon
         event.spawningInstance = instanceContainer
 
         val lobbySpawn = runBlocking {
-            PocketBaseFileClient().getValueAwait("values", "lobby_spawn")
-        }.takeIf { it.isNotEmpty() } ?: "none"
+            WebDavClient().awaitValue("lobby_spawn")
+        }?: "none"
 
         val spawn = if (lobbySpawn != "none") {
             val parts = lobbySpawn.split("#")
