@@ -1,10 +1,10 @@
 package net.eupixel
 
 import kotlinx.coroutines.runBlocking
-import net.eupixel.util.WebDavClient
 import net.minestom.server.MinecraftServer
 import net.minestom.server.instance.anvil.AnvilLoader
 import net.eupixel.event.EventManager
+import net.eupixel.vivlib.util.WebDavClient
 import java.io.File
 import java.io.FileOutputStream
 import java.net.Authenticator
@@ -69,8 +69,7 @@ fun main(): Unit = runBlocking {
         client.awaitFile("lobby.zip")
     } catch (_: ProtocolException) {
         downloadFallback("lobby.zip")
-    } ?: throw IllegalStateException("Download failed: no data")
-
+    }
     FileOutputStream("lobby.zip").use { it.write(data) }
     unzip("lobby.zip", "lobby")
     startServer()

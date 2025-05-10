@@ -9,15 +9,14 @@ version = "1.0"
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
+    implementation("com.github.eupixel:vivlib:0.1.2")
     implementation("net.minestom:minestom-snapshots:1_21_5-2398778b46")
     implementation("net.kyori:adventure-text-minimessage:4.20.0")
     implementation("org.slf4j:slf4j-simple:2.0.6")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
 }
 
