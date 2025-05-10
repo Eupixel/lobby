@@ -5,6 +5,7 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.instance.anvil.AnvilLoader
 import net.eupixel.event.EventManager
 import net.eupixel.vivlib.util.WebDavClient
+import net.minestom.server.extras.MojangAuth
 import java.io.File
 import java.io.FileOutputStream
 import java.net.Authenticator
@@ -39,6 +40,7 @@ fun startServer() {
         .createInstanceContainer()
         .apply { chunkLoader = AnvilLoader("lobby") }
     EventManager(MinecraftServer.getGlobalEventHandler(), instance)
+    MojangAuth.init()
     server.start("0.0.0.0", 25565)
 }
 
