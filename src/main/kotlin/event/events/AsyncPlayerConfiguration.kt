@@ -11,7 +11,7 @@ class AsyncPlayerConfiguration(event: AsyncPlayerConfigurationEvent, instanceCon
         val player = event.player
         event.spawningInstance = instanceContainer
         val lobbySpawn = runBlocking {
-            WebDavClient().awaitValue("lobby_spawn")
+            WebDavClient.awaitString("lobby_spawn")
         }?: "none"
         val spawn = if (lobbySpawn != "none") {
             val parts = lobbySpawn.split("#")
