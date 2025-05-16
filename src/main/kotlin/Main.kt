@@ -9,17 +9,15 @@ import net.minestom.server.extras.MojangAuth
 import net.minestom.server.instance.anvil.AnvilLoader
 
 fun main() {
-    val host = System.getenv("HOST") ?: "none"
-    val token = System.getenv("TOKEN") ?: "none"
+    DirectusClient.initFromEnv()
 
-    if (host != "none" && token != "none") {
-        DirectusClient.init(host, token)
-        runBlocking {
-            val result = DirectusClient.downloadWorld("lobby")
-            if (result.first) {
-                println("Spawn-Position: ${result.second}")
-                Helper.unzip("lobby.zip", "lobby")
-            }
+    runBlocking {
+        val (ok, spawnPos) = DirectusClient.downloadWorld("lobby")
+        if (ok) {
+            println("spawn_position=$spawnPos")
+            Helper.unzip("lobby.zip", "lobby")
+        } else {
+            println("Failed to download the lobby.")
         }
     }
 

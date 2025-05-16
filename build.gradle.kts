@@ -13,11 +13,12 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.eupixel:vivlib:v0.2.4")
+    implementation("com.github.eupixel:vivlib:v0.2.5")
     implementation("net.minestom:minestom-snapshots:1_21_5-2398778b46")
     implementation("net.kyori:adventure-text-minimessage:4.20.0")
     implementation("org.slf4j:slf4j-simple:2.0.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
 }
 
 tasks.test {
