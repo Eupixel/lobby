@@ -2,7 +2,10 @@ package net.eupixel
 
 import kotlinx.coroutines.runBlocking
 import net.eupixel.event.EventManager
+import net.eupixel.util.Config
+import net.eupixel.util.DecorationLoader
 import net.eupixel.vivlib.util.DirectusClient
+import net.eupixel.vivlib.util.DirectusClient.getData
 import net.eupixel.vivlib.util.Helper
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extras.MojangAuth
@@ -12,9 +15,14 @@ fun main() {
     DirectusClient.initFromEnv()
 
     runBlocking {
-        val (ok, spawnPos) = DirectusClient.downloadWorld("lobby")
+        val minY = getData("lobby_values", "name", "min_y", listOf("data"))
+            ?.get("data")
+            ?.asInt()
+        if (minY != null) {
+            Config.minY = minY
+        }
+        val ok = DirectusClient.downloadWorld("lobby")
         if (ok) {
-            println("spawn_position=$spawnPos")
             Helper.unzip("lobby.zip", "lobby")
         } else {
             println("Failed to download the lobby.")
@@ -22,12 +30,12 @@ fun main() {
     }
 
     val server = MinecraftServer.init()
-    val globalEventHandler = MinecraftServer.getGlobalEventHandler()
-    val instance = MinecraftServer.getInstanceManager()
+    Config.instance = MinecraftServer.getInstanceManager()
         .createInstanceContainer()
         .apply { chunkLoader = AnvilLoader("lobby") }
 
-    EventManager(globalEventHandler, instance)
+    DecorationLoader.init()
+    EventManager.init()
     MojangAuth.init()
     server.start("0.0.0.0", 25565)
 }
