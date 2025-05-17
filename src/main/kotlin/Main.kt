@@ -1,11 +1,12 @@
 package net.eupixel
 
 import kotlinx.coroutines.runBlocking
+import net.eupixel.command.CommandManager
 import net.eupixel.event.EventManager
-import net.eupixel.util.Config
+import net.eupixel.save.SaveManager
+import net.eupixel.save.saves.Config
 import net.eupixel.util.DecorationLoader
 import net.eupixel.vivlib.util.DirectusClient
-import net.eupixel.vivlib.util.DirectusClient.getData
 import net.eupixel.vivlib.util.Helper
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extras.MojangAuth
@@ -15,12 +16,6 @@ fun main() {
     DirectusClient.initFromEnv()
 
     runBlocking {
-        val minY = getData("lobby_values", "name", "min_y", listOf("data"))
-            ?.get("data")
-            ?.asInt()
-        if (minY != null) {
-            Config.minY = minY
-        }
         val ok = DirectusClient.downloadWorld("lobby")
         if (ok) {
             Helper.unzip("lobby.zip", "lobby")
@@ -35,7 +30,9 @@ fun main() {
         .apply { chunkLoader = AnvilLoader("lobby") }
 
     DecorationLoader.init()
+    SaveManager.init()
     EventManager.init()
+    CommandManager.init()
     MojangAuth.init()
     server.start("0.0.0.0", 25565)
 }

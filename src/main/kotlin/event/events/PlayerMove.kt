@@ -1,6 +1,6 @@
 package net.eupixel.event.events
 
-import net.eupixel.util.Config
+import net.eupixel.save.saves.Config
 import net.minestom.server.event.player.PlayerMoveEvent
 
 class PlayerMove(event: PlayerMoveEvent) {

@@ -1,6 +1,7 @@
 package net.eupixel.util
 
 import kotlinx.coroutines.runBlocking
+import net.eupixel.save.saves.Config
 import net.eupixel.vivlib.util.DirectusClient
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.coordinate.Vec
@@ -28,11 +29,6 @@ object DecorationLoader {
             title_background = DirectusClient.getData("lobby_values", "name", "title_background", listOf("data"))
                 ?.get("data")
                 ?.asText()
-
-            println("title=$title")
-            println("title_position=$title_position")
-            println("title_size=$title_size")
-            println("title_background=$title_background")
         }
 
         if(title != null && title_position != null && title_size != null && title_background != null) {

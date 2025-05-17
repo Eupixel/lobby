@@ -2,7 +2,7 @@ package net.eupixel.event.events
 
 import kotlinx.coroutines.runBlocking
 import net.eupixel.util.Util.convertToPos
-import net.eupixel.util.Config
+import net.eupixel.save.saves.Config
 import net.eupixel.vivlib.util.DirectusClient.getData
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
 
