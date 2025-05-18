@@ -2,7 +2,7 @@ package net.eupixel.core
 
 import kotlinx.coroutines.runBlocking
 import net.eupixel.save.saves.Config
-import net.eupixel.vivlib.util.DirectusClient
+import net.eupixel.vivlib.util.Helper.convertToPos
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.coordinate.Vec
 import net.minestom.server.entity.Entity
@@ -15,7 +15,6 @@ object DecorationLoader {
         var title_position: String?
         var title_size: String?
         var title_background: String?
-
         runBlocking {
             title = DirectusClient.getData("lobby_values", "name", "title", listOf("data"))
                 ?.get("data")
@@ -30,10 +29,9 @@ object DecorationLoader {
                 ?.get("data")
                 ?.asText()
         }
-
         if(title != null && title_position != null && title_size != null && title_background != null) {
             val title_entity = Entity(EntityType.TEXT_DISPLAY).apply {
-                setInstance(Config.instance, Util.convertToPos(title_position))
+                setInstance(Config.instance, convertToPos(title_position))
                 setNoGravity(true)
             }
             val title_meta = title_entity.entityMeta as TextDisplayMeta

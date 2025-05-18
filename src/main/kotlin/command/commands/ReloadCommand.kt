@@ -1,7 +1,7 @@
 package net.eupixel.command.commands
 
 import net.eupixel.save.SaveManager
-import net.eupixel.core.PrefixLoader
+import net.eupixel.util.PrefixLoader
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command

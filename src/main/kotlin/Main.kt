@@ -1,12 +1,12 @@
 package net.eupixel
 
+import net.eupixel.core.DirectusClient
 import kotlinx.coroutines.runBlocking
 import net.eupixel.command.CommandManager
 import net.eupixel.event.EventManager
 import net.eupixel.save.SaveManager
 import net.eupixel.save.saves.Config
 import net.eupixel.core.DecorationLoader
-import net.eupixel.vivlib.util.DirectusClient
 import net.eupixel.vivlib.util.Helper
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extras.MojangAuth
