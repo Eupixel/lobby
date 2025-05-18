@@ -3,6 +3,7 @@ package net.eupixel
 import net.eupixel.core.DirectusClient
 import kotlinx.coroutines.runBlocking
 import net.eupixel.command.CommandManager
+import net.eupixel.core.DBTranslator
 import net.eupixel.event.EventManager
 import net.eupixel.save.SaveManager
 import net.eupixel.save.saves.Config
@@ -14,6 +15,8 @@ import net.minestom.server.instance.anvil.AnvilLoader
 
 fun main() {
     DirectusClient.initFromEnv()
+    Config.translator = DBTranslator(arrayOf("flight_true", "flight_false", "prefix"))
+
     runBlocking {
         val ok = DirectusClient.downloadWorld("lobby")
         if (ok) {

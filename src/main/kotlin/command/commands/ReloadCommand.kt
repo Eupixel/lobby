@@ -1,13 +1,14 @@
 package net.eupixel.command.commands
 
 import net.eupixel.save.SaveManager
+import net.eupixel.save.saves.Config
 import net.eupixel.util.PrefixLoader
+import net.eupixel.vivlib.util.Permissions
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.condition.CommandCondition
 import net.minestom.server.entity.Player
-import net.eupixel.vivlib.util.Permissions
 
 class ReloadCommand : Command("reload") {
     init {
@@ -16,6 +17,7 @@ class ReloadCommand : Command("reload") {
             MinecraftServer.getConnectionManager().onlinePlayers.forEach {
                 it.refreshCommands()
                 PrefixLoader.loadPrefix(it)
+                Config.translator.loadFromDB()
             }
             sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloaded!"))
         }

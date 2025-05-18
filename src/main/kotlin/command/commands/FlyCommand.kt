@@ -1,6 +1,6 @@
 package net.eupixel.command.commands
 
-import net.eupixel.save.saves.Messages
+import net.eupixel.save.saves.Config.translator
 import net.eupixel.vivlib.util.Permissions
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.command.builder.Command
@@ -14,8 +14,11 @@ class FlyCommand : Command("fly") {
                 val enabled = !sender.isAllowFlying
                 sender.isAllowFlying = enabled
                 sender.isFlying = enabled
-                sender.sendMessage(MiniMessage.miniMessage().deserialize(Messages.flight_state.replace("<state>", enabled.toString())))
-            }
+                if (enabled) {
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize(translator.get("flight_true", sender.locale)))
+                } else
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize(translator.get("flight_false", sender.locale)))
+                }
         }
         condition = CommandCondition { sender, _ ->
             if (sender is Player) {
