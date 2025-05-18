@@ -1,4 +1,4 @@
-package net.eupixel.util
+package net.eupixel.core
 
 import net.minestom.server.coordinate.Pos
 

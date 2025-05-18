@@ -1,4 +1,4 @@
-package net.eupixel.util
+package net.eupixel.core
 
 import kotlinx.coroutines.runBlocking
 import net.eupixel.save.saves.Config
