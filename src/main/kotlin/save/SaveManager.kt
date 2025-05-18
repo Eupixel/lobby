@@ -8,26 +8,18 @@ import net.eupixel.vivlib.util.DirectusClient.getData
 object SaveManager {
     fun init() {
         runBlocking {
-            val minY = getData("lobby_values", "name", "min_y", listOf("data"))
+            Config.minY = getData("lobby_values", "name", "min_y", listOf("data"))
                 ?.get("data")
-                ?.asInt()
-            if (minY != null) {
-                Config.minY = minY
-            }
+                ?.asInt(0)?: 0
 
-            val flight_state = getData("messages", "name", "flight_state", listOf("message"))
+            Messages.prefix = getData("messages", "name", "prefix", listOf("message"))
                 ?.get("message")
-                ?.asText()
-            if (flight_state != null) {
-                if(flight_state.contains("<prefix>")) {
-                    val prefix = getData("messages", "name", "prefix", listOf("message"))
-                        ?.get("message")
-                        ?.asText()
-                    Messages.flight_state = flight_state.replace("<prefix>", prefix.orEmpty())
-                } else {
-                    Messages.flight_state = flight_state
-                }
-            }
+                ?.asText().orEmpty()
+
+            Messages.flight_state = getData("messages", "name", "flight_state", listOf("message"))
+                ?.get("message")
+                ?.asText().orEmpty()
+                .replace("<prefix>", Messages.prefix)
         }
     }
 }

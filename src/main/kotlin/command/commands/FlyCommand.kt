@@ -15,12 +15,14 @@ class FlyCommand : Command("fly") {
                 sender.isAllowFlying = enabled
                 sender.isFlying = enabled
                 sender.sendMessage(MiniMessage.miniMessage().deserialize(Messages.flight_state.replace("<state>", enabled.toString())))
-            } else {
-                sender.sendMessage("Only players can use this command.")
             }
         }
         condition = CommandCondition { sender, _ ->
-            Permissions.hasPermission(sender as Player, "command.fly")
+            if (sender is Player) {
+                Permissions.hasPermission(sender, "command.fly")
+            } else {
+                return@CommandCondition false
+            }
         }
     }
 }
