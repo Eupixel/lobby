@@ -3,7 +3,6 @@ package net.eupixel.save
 import kotlinx.coroutines.runBlocking
 import net.eupixel.core.DirectusClient.getData
 import net.eupixel.save.saves.Config
-import net.eupixel.save.saves.Messages
 import net.eupixel.vivlib.util.Helper.convertToPos
 
 object SaveManager {
@@ -18,15 +17,6 @@ object SaveManager {
                     ?.asText()
                 convertToPos(raw)
             }
-
-            Messages.prefix = getData("messages", "name", "prefix", listOf("message"))
-                ?.get("message")
-                ?.asText().orEmpty()
-
-            Messages.flight_state = getData("messages", "name", "flight_state", listOf("message"))
-                ?.get("message")
-                ?.asText().orEmpty()
-                .replace("<prefix>", Messages.prefix)
         }
     }
 }

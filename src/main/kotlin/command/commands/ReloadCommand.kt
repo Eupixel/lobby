@@ -9,17 +9,23 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.condition.CommandCondition
 import net.minestom.server.entity.Player
+import java.util.Locale
+import kotlin.system.measureTimeMillis
 
 class ReloadCommand : Command("reload") {
     init {
         setDefaultExecutor { sender, _ ->
-            SaveManager.init()
-            MinecraftServer.getConnectionManager().onlinePlayers.forEach {
-                it.refreshCommands()
-                PrefixLoader.loadPrefix(it)
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloading..."))
+            val ms = measureTimeMillis {
+                SaveManager.init()
                 Config.translator.loadFromDB()
+                MinecraftServer.getConnectionManager().onlinePlayers.forEach {
+                    it.refreshCommands()
+                    PrefixLoader.loadPrefix(it)
+                }
             }
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloaded!"))
+            val formatted = String.format(Locale.US, "%.2f", ms / 1000.0)
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloaded! (in $formatted s)"))
         }
         condition = CommandCondition { sender, _ ->
             if (sender is Player) {
