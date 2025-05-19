@@ -7,7 +7,6 @@ import net.eupixel.core.DBTranslator
 import net.eupixel.event.EventManager
 import net.eupixel.save.SaveManager
 import net.eupixel.save.saves.Config
-import net.eupixel.core.DecorationLoader
 import net.eupixel.vivlib.util.Helper
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extras.MojangAuth
@@ -16,6 +15,7 @@ import net.minestom.server.instance.anvil.AnvilLoader
 fun main() {
     DirectusClient.initFromEnv()
     Config.translator = DBTranslator(arrayOf("flight_true", "flight_false", "prefix"))
+    val server = MinecraftServer.init()
 
     runBlocking {
         val ok = DirectusClient.downloadWorld("lobby")
@@ -26,12 +26,10 @@ fun main() {
         }
     }
 
-    val server = MinecraftServer.init()
     Config.instance = MinecraftServer.getInstanceManager()
         .createInstanceContainer()
         .apply { chunkLoader = AnvilLoader("lobby") }
 
-    DecorationLoader.init()
     SaveManager.init()
     EventManager.init()
     CommandManager.init()

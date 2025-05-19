@@ -19,6 +19,7 @@ class ReloadCommand : Command("reload") {
             val ms = measureTimeMillis {
                 SaveManager.init()
                 Config.translator.loadFromDB()
+                Permissions.refreshAll()
                 MinecraftServer.getConnectionManager().onlinePlayers.forEach {
                     it.refreshCommands()
                     PrefixLoader.loadPrefix(it)
