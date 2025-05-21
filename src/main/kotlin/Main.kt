@@ -14,7 +14,7 @@ import net.minestom.server.instance.anvil.AnvilLoader
 
 fun main() {
     DirectusClient.initFromEnv()
-    Config.translator = DBTranslator(arrayOf("whereami", "flight_true", "flight_false", "prefix"))
+    Config.translator = DBTranslator(arrayOf("chat", "whereami", "flight_true", "flight_false", "prefix"))
     val server = MinecraftServer.init()
 
     runBlocking {
