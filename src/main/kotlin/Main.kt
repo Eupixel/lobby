@@ -14,7 +14,7 @@ import net.minestom.server.instance.anvil.AnvilLoader
 
 fun main() {
     DirectusClient.initFromEnv()
-    Config.translator = DBTranslator(arrayOf("flight_true", "flight_false", "prefix"))
+    Config.translator = DBTranslator(arrayOf("whereami", "flight_true", "flight_false", "prefix"))
     val server = MinecraftServer.init()
 
     runBlocking {
@@ -28,7 +28,7 @@ fun main() {
 
     Config.instance = MinecraftServer.getInstanceManager()
         .createInstanceContainer()
-        .apply { chunkLoader = AnvilLoader("lobby") }
+        .apply { chunkLoader = AnvilLoader("lobby"); timeRate = 0 }
 
     SaveManager.init()
     EventManager.init()
