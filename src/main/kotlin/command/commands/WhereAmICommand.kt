@@ -6,7 +6,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
 import java.util.Locale
 
-class WhereAmICommand : Command("fly") {
+class WhereAmICommand : Command("whereami") {
     init {
         setDefaultExecutor { sender, _ ->
             if(sender is Player) {
