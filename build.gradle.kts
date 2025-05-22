@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     implementation("com.github.eupixel:vivlib:v0.4.0")
-    implementation("net.minestom:minestom-snapshots:1_21_5-2398778b46")
+    implementation("net.minestom:minestom-snapshots:1_21_5-69b9a5d844")
     implementation("net.kyori:adventure-text-minimessage:4.20.0")
     implementation("org.slf4j:slf4j-simple:2.0.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
