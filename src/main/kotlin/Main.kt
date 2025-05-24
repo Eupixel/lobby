@@ -18,7 +18,7 @@ fun main() {
     val server = MinecraftServer.init()
 
     runBlocking {
-        val ok = DirectusClient.downloadWorld("lobby")
+        val ok = DirectusClient.downloadFile("worlds", "name", "lobby", "world_data", "lobby.zip")
         if (ok) {
             Helper.unzip("lobby.zip", "lobby")
         } else {
