@@ -18,30 +18,15 @@ object SaveManager {
         var title_size: String?
         var title_background: String?
         runBlocking {
-            Config.minY = getData("lobby_values", "name", "min_y", listOf("data"))
-                ?.get("data")
-                ?.asInt(0)?: 0
-            Config.time = getData("lobby_values", "name", "time", listOf("data"))
-                ?.get("data")
-                ?.asLong(1000)?: 1000
-            Config.spawnPosition = runBlocking {
-                val raw = getData("lobby_values", "name", "spawn_position", listOf("data"))
-                    ?.get("data")
-                    ?.asText()
-                convertToPos(raw)
-            }
-            title = getData("lobby_values", "name", "title", listOf("data"))
-                ?.get("data")
-                ?.asText()
-            title_position = getData("lobby_values", "name", "title_position", listOf("data"))
-                ?.get("data")
-                ?.asText()
-            title_size = getData("lobby_values", "name", "title_size", listOf("data"))
-                ?.get("data")
-                ?.asText()
-            title_background = getData("lobby_values", "name", "title_background", listOf("data"))
-                ?.get("data")
-                ?.asText()
+            Config.minY = getData("lobby_values", "name", "min_y", "data")
+                ?.toInt()?: 0
+            Config.time = getData("lobby_values", "name", "time", "data")
+                ?.toLong()?: 1000
+            Config.spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
+            title = getData("lobby_values", "name", "title", "data")
+            title_position = getData("lobby_values", "name", "title_position", "data")
+            title_size = getData("lobby_values", "name", "title_size", "data")
+            title_background = getData("lobby_values", "name", "title_background", "data")
         }
         Config.instance.time = Config.time
         if (::title_entity.isInitialized) {
