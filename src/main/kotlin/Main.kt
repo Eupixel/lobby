@@ -4,6 +4,7 @@ import net.eupixel.core.DirectusClient
 import kotlinx.coroutines.runBlocking
 import net.eupixel.command.CommandManager
 import net.eupixel.core.DBTranslator
+import net.eupixel.core.Messenger
 import net.eupixel.event.EventManager
 import net.eupixel.save.SaveManager
 import net.eupixel.save.saves.Config
@@ -25,6 +26,9 @@ fun main() {
             println("Failed to download the lobby.")
         }
     }
+
+    Messenger.bind("0.0.0.0", 2905)
+    Messenger.registerTarget("entrypoint", "entrypoint", 2905)
 
     Config.instance = MinecraftServer.getInstanceManager()
         .createInstanceContainer()
