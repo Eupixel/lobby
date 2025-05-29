@@ -23,7 +23,6 @@ class QueueCommand : Command("queue") {
                 suggestions.addEntry(SuggestionEntry("leave"))
             }
         }
-
         val gamemodeArg = ArgumentType.Word("gamemode")
         gamemodeArg.setSuggestionCallback { sender, context, suggestions ->
             if (sender is Player && context.get(action).equals("join", ignoreCase = true)) {
@@ -36,14 +35,12 @@ class QueueCommand : Command("queue") {
                 sender.sendMessage(mini.deserialize(translator.get("invalid_gamemode", locale).replace("<input>", exception.input)))
             }
         }
-
         setDefaultExecutor { sender, _ ->
             if (sender is Player) {
                 val locale = sender.locale
                 sender.sendMessage(mini.deserialize(translator.get("queue_usage", locale)))
             }
         }
-
         addSyntax({ sender, _ ->
             if (sender is Player) {
                 val locale = sender.locale
@@ -56,7 +53,6 @@ class QueueCommand : Command("queue") {
                 Messenger.send("entrypoint", "queue_left", sender.username)
             }
         }, action)
-
         addSyntax({ sender, context ->
             if (sender is Player) {
                 val locale = sender.locale
@@ -79,7 +75,6 @@ class QueueCommand : Command("queue") {
                 Messenger.send("entrypoint", "queue_joined", "${sender.username}&$gm")
             }
         }, action, gamemodeArg)
-
         condition = CommandCondition { sender, _ -> sender is Player }
     }
 }
