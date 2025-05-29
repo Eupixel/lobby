@@ -29,11 +29,7 @@ class ReloadCommand : Command("reload") {
             sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloaded! (in $formatted s)"))
         }
         condition = CommandCondition { sender, _ ->
-            if (sender is Player) {
-                Permissions.hasPermission(sender.uuid, "command.reload")
-            } else {
-                return@CommandCondition true
-            }
+            sender is Player && Permissions.hasPermission(sender.uuid, "command.reload")
         }
     }
 }

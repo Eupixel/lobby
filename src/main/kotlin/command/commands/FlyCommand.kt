@@ -16,16 +16,13 @@ class FlyCommand : Command("fly") {
                 sender.isFlying = enabled
                 if (enabled) {
                     sender.sendMessage(MiniMessage.miniMessage().deserialize(translator.get("flight_true", sender.locale)))
-                } else
+                } else {
                     sender.sendMessage(MiniMessage.miniMessage().deserialize(translator.get("flight_false", sender.locale)))
                 }
+            }
         }
         condition = CommandCondition { sender, _ ->
-            if (sender is Player) {
-                Permissions.hasPermission(sender.uuid, "command.fly")
-            } else {
-                return@CommandCondition false
-            }
+            sender is Player && Permissions.hasPermission(sender.uuid, "command.fly")
         }
     }
 }

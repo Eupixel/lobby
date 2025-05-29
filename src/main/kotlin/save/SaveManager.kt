@@ -1,6 +1,5 @@
 package net.eupixel.save
 
-import kotlinx.coroutines.runBlocking
 import net.eupixel.core.DirectusClient.getData
 import net.eupixel.save.saves.Config
 import net.eupixel.vivlib.util.Helper.convertToPos
@@ -13,25 +12,20 @@ import net.minestom.server.entity.metadata.display.TextDisplayMeta
 object SaveManager {
     private lateinit var title_entity: Entity
     fun init() {
-        var title: String?
-        var title_position: String?
-        var title_size: String?
-        var title_background: String?
-        runBlocking {
-            Config.minY = getData("lobby_values", "name", "min_y", "data")
-                ?.toInt()?: 0
-            Config.time = getData("lobby_values", "name", "time", "data")
-                ?.toLong()?: 1000
-            Config.spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
-            title = getData("lobby_values", "name", "title", "data")
-            title_position = getData("lobby_values", "name", "title_position", "data")
-            title_size = getData("lobby_values", "name", "title_size", "data")
-            title_background = getData("lobby_values", "name", "title_background", "data")
-        }
-        Config.instance.time = Config.time
+        Config.minY = getData("lobby_values", "name", "min_y", "data")?.toInt()?: 0
+        Config.instance.time = getData("lobby_values", "name", "time", "data")?.toLong()?: 1000
+        Config.spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
+        Config.availableGamemodes = getData("lobby_values", "name", "available_gamemodes", "data").orEmpty().split(":").toList()
+
+        val title = getData("lobby_values", "name", "title", "data")
+        val title_position = getData("lobby_values", "name", "title_position", "data")
+        val title_size = getData("lobby_values", "name", "title_size", "data")
+        val title_background = getData("lobby_values", "name", "title_background", "data")
+
         if (::title_entity.isInitialized) {
             title_entity.remove()
         }
+
         if(title != null && title_position != null && title_size != null && title_background != null) {
             title_entity = Entity(EntityType.TEXT_DISPLAY).apply {
                 setInstance(Config.instance, convertToPos(title_position))

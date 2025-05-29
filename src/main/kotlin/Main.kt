@@ -12,10 +12,11 @@ import net.eupixel.vivlib.util.Helper
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extras.MojangAuth
 import net.minestom.server.instance.anvil.AnvilLoader
+import net.minestom.server.network.packet.server.common.TransferPacket
 
 fun main() {
     DirectusClient.initFromEnv()
-    Config.translator = DBTranslator(arrayOf("chat", "whereami", "flight_true", "flight_false", "prefix"))
+    Config.translator = DBTranslator(arrayOf("chat", "whereami", "flight_true", "flight_false", "prefix", "invalid_gamemode", "queue_usage", "queue_left", "queue_joined", "queue_already", "queue_none"))
     val server = MinecraftServer.init()
 
     runBlocking {
@@ -29,6 +30,15 @@ fun main() {
 
     Messenger.bind("0.0.0.0", 2905)
     Messenger.registerTarget("entrypoint", "entrypoint", 2905)
+    Messenger.addListener("transfer") { msg ->
+        val name = msg.split("?")[0]
+        val target = msg.split("?")[1]
+        MinecraftServer.getConnectionManager().onlinePlayers.forEach {
+            if(it.username == name) {
+                it.sendPacket(TransferPacket(target.split("&")[0], target.split("&")[1].toInt()))
+            }
+        }
+    }
 
     Config.instance = MinecraftServer.getInstanceManager()
         .createInstanceContainer()
