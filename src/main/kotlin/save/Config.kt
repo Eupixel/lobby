@@ -14,37 +14,40 @@ import kotlin.text.toDouble
 import kotlin.text.toInt
 
 object Config {
+    lateinit var instance: Instance
+    lateinit var translator: DBTranslator
+
     var minY: Int = 0
     var spawnPosition: Pos = Pos(0.0, 0.0, 0.0)
     var availableGamemodes: List<String> = listOf()
-    lateinit var instance: Instance
-    lateinit var translator: DBTranslator
-    private lateinit var title_entity: Entity
+    private lateinit var titleEntity: Entity
 
     fun init() {
-        minY = getData("lobby_values", "name", "min_y", "data")?.toInt()?: 0
-        instance.time = getData("lobby_values", "name", "time", "data")?.toLong()?: 1000
+        minY = getData("lobby_values", "name", "min_y", "data")?.toInt() ?: 0
+        instance.time = getData("lobby_values", "name", "time", "data")?.toLong() ?: 1000
         spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
-        availableGamemodes = getData("lobby_values", "name", "available_gamemodes", "data").orEmpty().split(":").toList()
+        availableGamemodes = getData("lobby_values", "name", "available_gamemodes", "data")
+            .orEmpty().split(":")
+
         val title = getData("lobby_values", "name", "title", "data")
-        val title_position = getData("lobby_values", "name", "title_position", "data")
-        val title_size = getData("lobby_values", "name", "title_size", "data")
-        val title_background = getData("lobby_values", "name", "title_background", "data")
-        if (::title_entity.isInitialized) {
-            title_entity.remove()
+        val titlePosition = getData("lobby_values", "name", "title_position", "data")
+        val titleSize = getData("lobby_values", "name", "title_size", "data")
+        val titleBg = getData("lobby_values", "name", "title_background", "data")
+
+        if (::titleEntity.isInitialized) {
+            titleEntity.remove()
         }
-        if(title != null && title_position != null && title_size != null && title_background != null) {
-            title_entity = Entity(EntityType.TEXT_DISPLAY).apply {
-                setInstance(instance, convertToPos(title_position))
+
+        if (title != null && titlePosition != null && titleSize != null && titleBg != null) {
+            titleEntity = Entity(EntityType.TEXT_DISPLAY).apply {
+                setInstance(this@Config.instance, convertToPos(titlePosition))
                 setNoGravity(true)
             }
-            val title_meta = title_entity.entityMeta as TextDisplayMeta
-            title_meta.apply {
-                text = MiniMessage.miniMessage().deserialize(title)
-                scale = Vec(title_size.toDouble())
-                backgroundColor = title_size.toInt()
-                isHasGlowingEffect = true
-            }
+            val meta = titleEntity.entityMeta as TextDisplayMeta
+            meta.text = MiniMessage.miniMessage().deserialize(title)
+            meta.scale = Vec(titleSize.toDouble())
+            meta.backgroundColor = titleBg.removePrefix("0x").toInt(16)
+            meta.isHasGlowingEffect = true
         }
     }
 }
