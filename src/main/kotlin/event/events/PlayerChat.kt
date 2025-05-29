@@ -1,6 +1,6 @@
 package net.eupixel.event.events
 
-import net.eupixel.save.saves.Config.translator
+import net.eupixel.save.Config.translator
 import net.eupixel.vivlib.util.Permissions
 import net.kyori.adventure.text.minimessage.MiniMessage.miniMessage
 import net.minestom.server.event.player.PlayerChatEvent

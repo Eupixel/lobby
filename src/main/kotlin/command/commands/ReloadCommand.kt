@@ -1,7 +1,6 @@
 package net.eupixel.command.commands
 
-import net.eupixel.save.SaveManager
-import net.eupixel.save.saves.Config
+import net.eupixel.save.Config
 import net.eupixel.util.PrefixLoader
 import net.eupixel.vivlib.util.Permissions
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -17,7 +16,7 @@ class ReloadCommand : Command("reload") {
         setDefaultExecutor { sender, _ ->
             sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloading..."))
             val ms = measureTimeMillis {
-                SaveManager.init()
+                Config.init()
                 Config.translator.loadFromDB()
                 Permissions.refreshAll()
                 MinecraftServer.getConnectionManager().onlinePlayers.forEach {

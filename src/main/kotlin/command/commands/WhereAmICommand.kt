@@ -1,6 +1,6 @@
 package net.eupixel.command.commands
 
-import net.eupixel.save.saves.Config.translator
+import net.eupixel.save.Config.translator
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player

@@ -6,8 +6,7 @@ import net.eupixel.command.CommandManager
 import net.eupixel.core.DBTranslator
 import net.eupixel.core.Messenger
 import net.eupixel.event.EventManager
-import net.eupixel.save.SaveManager
-import net.eupixel.save.saves.Config
+import net.eupixel.save.Config
 import net.eupixel.vivlib.util.Helper
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extras.MojangAuth
@@ -44,7 +43,7 @@ fun main() {
         .createInstanceContainer()
         .apply { chunkLoader = AnvilLoader("lobby"); timeRate = 0 }
 
-    SaveManager.init()
+    Config.init()
     EventManager.init()
     CommandManager.init()
     MojangAuth.init()
