@@ -18,11 +18,13 @@ object Config {
     lateinit var translator: DBTranslator
 
     var minY: Int = 0
+    var chatFormat: String = ""
     var spawnPosition: Pos = Pos(0.0, 0.0, 0.0)
     var availableGamemodes: List<String> = listOf()
     private lateinit var titleEntity: Entity
 
     fun init() {
+        chatFormat = getData("global_values", "name", "chat_format", "data").orEmpty()
         minY = getData("lobby_values", "name", "min_y", "data")?.toInt() ?: 0
         instance.time = getData("lobby_values", "name", "time", "data")?.toLong() ?: 1000
         spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))

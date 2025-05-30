@@ -15,7 +15,7 @@ import net.minestom.server.network.packet.server.common.TransferPacket
 
 fun main() {
     DirectusClient.initFromEnv()
-    Config.translator = DBTranslator(arrayOf("chat", "whereami", "flight_true", "flight_false", "prefix", "invalid_gamemode", "queue_usage", "queue_left", "queue_joined", "queue_already", "queue_none"))
+    Config.translator = DBTranslator(arrayOf("whereami", "flight_true", "flight_false", "prefix", "invalid_gamemode", "queue_usage", "queue_left", "queue_joined", "queue_already", "queue_none"))
     val server = MinecraftServer.init()
 
     runBlocking {
