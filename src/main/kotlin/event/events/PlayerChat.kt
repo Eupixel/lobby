@@ -10,7 +10,7 @@ class PlayerChat(event: PlayerChatEvent) {
         val format = Config.chatFormat
         var message = format
             .replace("<player_prefix>", Permissions.getPrefix(event.player.uuid))
-            .replace("<player_name>", event.player.username)
+            .replace("<player>", event.player.username)
             .replace("<message>", event.rawMessage)
         event.formattedMessage = miniMessage().deserialize(message)
     }
