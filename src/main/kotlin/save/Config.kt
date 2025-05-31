@@ -2,6 +2,7 @@ package net.eupixel.save
 
 import net.eupixel.core.DBTranslator
 import net.eupixel.core.DirectusClient.getData
+import net.eupixel.core.DirectusClient.listItems
 import net.eupixel.vivlib.util.Helper.convertToPos
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.coordinate.Pos
@@ -28,8 +29,7 @@ object Config {
         minY = getData("lobby_values", "name", "min_y", "data")?.toInt() ?: 0
         instance.time = getData("lobby_values", "name", "time", "data")?.toLong() ?: 1000
         spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
-        availableGamemodes = getData("lobby_values", "name", "available_gamemodes", "data")
-            .orEmpty().split(":")
+        availableGamemodes = listItems("gamemodes", "friendly_name")
 
         val title = getData("lobby_values", "name", "title", "data")
         val titlePosition = getData("lobby_values", "name", "title_position", "data")
