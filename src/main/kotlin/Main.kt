@@ -5,6 +5,7 @@ import kotlinx.coroutines.runBlocking
 import net.eupixel.command.CommandManager
 import net.eupixel.core.DBTranslator
 import net.eupixel.core.Messenger
+import net.eupixel.core.QueueManager
 import net.eupixel.event.EventManager
 import net.eupixel.save.Config
 import net.eupixel.vivlib.util.Helper
@@ -13,6 +14,8 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.extras.MojangAuth
 import net.minestom.server.instance.anvil.AnvilLoader
 import net.minestom.server.network.packet.server.common.TransferPacket
+
+val qm = QueueManager()
 
 fun main() {
     DirectusClient.initFromEnv()

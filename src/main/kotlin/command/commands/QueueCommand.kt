@@ -1,6 +1,7 @@
 package net.eupixel.command.commands
 
 import net.eupixel.core.Messenger
+import net.eupixel.qm
 import net.eupixel.save.Config
 import net.eupixel.save.Config.translator
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -9,10 +10,8 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.suggestion.SuggestionEntry
 import net.minestom.server.command.builder.condition.CommandCondition
 import net.minestom.server.entity.Player
-import java.util.*
 
 class QueueCommand : Command("queue") {
-    private val queued = mutableSetOf<UUID>()
     private val mini = MiniMessage.miniMessage()
 
     init {
@@ -44,11 +43,11 @@ class QueueCommand : Command("queue") {
         addSyntax({ sender, _ ->
             if (sender is Player) {
                 val locale = sender.locale
-                if (!queued.contains(sender.uuid)) {
+                if (!qm.queued.contains(sender.uuid)) {
                     sender.sendMessage(mini.deserialize(translator.get("queue_none", locale)))
                     return@addSyntax
                 }
-                queued.remove(sender.uuid)
+                qm.queued.remove(sender.uuid)
                 sender.sendMessage(mini.deserialize(translator.get("queue_left", locale)))
                 Messenger.send("entrypoint", "queue_left", sender.username)
             }
@@ -61,7 +60,7 @@ class QueueCommand : Command("queue") {
                     sender.sendMessage(mini.deserialize(translator.get("queue_usage", locale)))
                     return@addSyntax
                 }
-                if (queued.contains(sender.uuid)) {
+                if (qm.queued.contains(sender.uuid)) {
                     sender.sendMessage(mini.deserialize(translator.get("queue_already", locale)))
                     return@addSyntax
                 }
@@ -70,7 +69,7 @@ class QueueCommand : Command("queue") {
                     sender.sendMessage(mini.deserialize(translator.get("invalid_gamemode", locale).replace("<input>", gm)))
                     return@addSyntax
                 }
-                queued.add(sender.uuid)
+                qm.queued.add(sender.uuid)
                 sender.sendMessage(mini.deserialize(translator.get("queue_joined", locale).replace("<gamemode>", gm)))
                 Messenger.send("entrypoint", "queue_joined", "${sender.username}&$gm")
             }
