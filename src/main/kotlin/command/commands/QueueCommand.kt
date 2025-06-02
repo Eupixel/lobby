@@ -49,7 +49,7 @@ class QueueCommand : Command("queue") {
                 }
                 QueueManager.queued.remove(sender.uuid)
                 sender.sendMessage(mini.deserialize(DBTranslator.get("queue_left", locale)))
-                Messenger.send("entrypoint", "queue_left", sender.username)
+                Messenger.send("entrypoint", "queue_leave", sender.username)
             }
         }, action)
         addSyntax({ sender, context ->
@@ -71,7 +71,7 @@ class QueueCommand : Command("queue") {
                 }
                 QueueManager.queued.add(sender.uuid)
                 sender.sendMessage(mini.deserialize(DBTranslator.get("queue_joined", locale).replace("<gamemode>", gm)))
-                Messenger.send("entrypoint", "queue_joined", "${sender.username}&$gm")
+                Messenger.send("entrypoint", "queue_join", "${sender.username}&$gm")
             }
         }, action, gamemodeArg)
         condition = CommandCondition { sender, _ -> sender is Player }
