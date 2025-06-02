@@ -23,11 +23,12 @@ fun main() {
         }
     }
 
+    val server = MinecraftServer.init()
     Config.instance = MinecraftServer.getInstanceManager()
         .createInstanceContainer()
         .apply { chunkLoader = AnvilLoader("lobby"); timeRate = 0 }
 
-    val server = MinecraftServer.init()
+
     Config.init()
     EventManager.init()
     CommandManager.init()
