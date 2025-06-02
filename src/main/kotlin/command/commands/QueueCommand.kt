@@ -1,9 +1,9 @@
 package net.eupixel.command.commands
 
+import net.eupixel.core.DBTranslator
 import net.eupixel.core.Messenger
-import net.eupixel.qm
+import net.eupixel.core.QueueManager
 import net.eupixel.save.Config
-import net.eupixel.save.Config.translator
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
@@ -31,24 +31,24 @@ class QueueCommand : Command("queue") {
         gamemodeArg.setCallback { sender, exception ->
             if (sender is Player) {
                 val locale = sender.locale
-                sender.sendMessage(mini.deserialize(translator.get("invalid_gamemode", locale).replace("<input>", exception.input)))
+                sender.sendMessage(mini.deserialize(DBTranslator.get("invalid_gamemode", locale).replace("<input>", exception.input)))
             }
         }
         setDefaultExecutor { sender, _ ->
             if (sender is Player) {
                 val locale = sender.locale
-                sender.sendMessage(mini.deserialize(translator.get("queue_usage", locale)))
+                sender.sendMessage(mini.deserialize(DBTranslator.get("queue_usage", locale)))
             }
         }
         addSyntax({ sender, _ ->
             if (sender is Player) {
                 val locale = sender.locale
-                if (!qm.queued.contains(sender.uuid)) {
-                    sender.sendMessage(mini.deserialize(translator.get("queue_none", locale)))
+                if (!QueueManager.queued.contains(sender.uuid)) {
+                    sender.sendMessage(mini.deserialize(DBTranslator.get("queue_none", locale)))
                     return@addSyntax
                 }
-                qm.queued.remove(sender.uuid)
-                sender.sendMessage(mini.deserialize(translator.get("queue_left", locale)))
+                QueueManager.queued.remove(sender.uuid)
+                sender.sendMessage(mini.deserialize(DBTranslator.get("queue_left", locale)))
                 Messenger.send("entrypoint", "queue_left", sender.username)
             }
         }, action)
@@ -57,20 +57,20 @@ class QueueCommand : Command("queue") {
                 val locale = sender.locale
                 val act = context.get(action)
                 if (!act.equals("join", ignoreCase = true)) {
-                    sender.sendMessage(mini.deserialize(translator.get("queue_usage", locale)))
+                    sender.sendMessage(mini.deserialize(DBTranslator.get("queue_usage", locale)))
                     return@addSyntax
                 }
-                if (qm.queued.contains(sender.uuid)) {
-                    sender.sendMessage(mini.deserialize(translator.get("queue_already", locale)))
+                if (QueueManager.queued.contains(sender.uuid)) {
+                    sender.sendMessage(mini.deserialize(DBTranslator.get("queue_already", locale)))
                     return@addSyntax
                 }
                 val gm = context.get(gamemodeArg)
                 if (!Config.availableGamemodes.contains(gm)) {
-                    sender.sendMessage(mini.deserialize(translator.get("invalid_gamemode", locale).replace("<input>", gm)))
+                    sender.sendMessage(mini.deserialize(DBTranslator.get("invalid_gamemode", locale).replace("<input>", gm)))
                     return@addSyntax
                 }
-                qm.queued.add(sender.uuid)
-                sender.sendMessage(mini.deserialize(translator.get("queue_joined", locale).replace("<gamemode>", gm)))
+                QueueManager.queued.add(sender.uuid)
+                sender.sendMessage(mini.deserialize(DBTranslator.get("queue_joined", locale).replace("<gamemode>", gm)))
                 Messenger.send("entrypoint", "queue_joined", "${sender.username}&$gm")
             }
         }, action, gamemodeArg)

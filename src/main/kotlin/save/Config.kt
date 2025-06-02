@@ -1,6 +1,5 @@
 package net.eupixel.save
 
-import net.eupixel.core.DBTranslator
 import net.eupixel.core.DirectusClient.getData
 import net.eupixel.core.DirectusClient.listItems
 import net.eupixel.vivlib.util.Helper.convertToPos
@@ -16,7 +15,6 @@ import kotlin.text.toInt
 
 object Config {
     lateinit var instance: Instance
-    lateinit var translator: DBTranslator
 
     var minY: Int = 0
     var chatFormat: String = ""

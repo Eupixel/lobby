@@ -2,6 +2,6 @@ package net.eupixel.core
 
 import java.util.UUID
 
-class QueueManager {
+object QueueManager {
     val queued = mutableSetOf<UUID>()
 }

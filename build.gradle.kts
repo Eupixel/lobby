@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.eupixel:vivlib:v0.5.4")
+    implementation("com.github.eupixel:vivlib:v0.5.5")
     implementation("net.minestom:minestom-snapshots:1_21_5-69b9a5d844")
     implementation("net.kyori:adventure-text-minimessage:4.20.0")
     implementation("org.slf4j:slf4j-simple:2.0.6")
