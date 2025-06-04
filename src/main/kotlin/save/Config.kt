@@ -16,6 +16,7 @@ import kotlin.text.toInt
 object Config {
     lateinit var instance: Instance
 
+    val queued: MutableSet<String> = mutableSetOf()
     var minY: Int = 0
     var chatFormat: String = ""
     var spawnPosition: Pos = Pos(0.0, 0.0, 0.0)
