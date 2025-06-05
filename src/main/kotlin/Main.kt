@@ -28,7 +28,6 @@ fun main() {
         .createInstanceContainer()
         .apply { chunkLoader = AnvilLoader("lobby"); timeRate = 0 }
 
-
     Config.init()
     EventManager.init()
     CommandManager.init()
