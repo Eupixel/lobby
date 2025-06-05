@@ -15,20 +15,23 @@ import kotlin.text.toInt
 
 object Config {
     lateinit var instance: Instance
-
     val queued: MutableSet<String> = mutableSetOf()
-    var minY: Int = 0
+
+    var navigatorType: String = ""
     var chatFormat: String = ""
+    var minY: Int = 0
     var spawnPosition: Pos = Pos(0.0, 0.0, 0.0)
     var availableGamemodes: List<String> = listOf()
     private lateinit var titleEntity: Entity
 
     fun init() {
+        navigatorType = getData("lobby_values", "name", "navigator_type", "data").orEmpty()
         chatFormat = getData("global_values", "name", "chat_format", "data").orEmpty()
         minY = getData("lobby_values", "name", "min_y", "data")?.toInt() ?: 0
-        instance.time = getData("lobby_values", "name", "time", "data")?.toLong() ?: 1000
         spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
         availableGamemodes = listItems("gamemodes", "friendly_name")
+
+        instance.time = getData("lobby_values", "name", "time", "data")?.toLong() ?: 1000
 
         val title = getData("lobby_values", "name", "title", "data")
         val titlePosition = getData("lobby_values", "name", "title_position", "data")

@@ -3,7 +3,7 @@ package net.eupixel.command
 import net.eupixel.command.commands.FlyCommand
 import net.eupixel.command.commands.QueueCommand
 import net.eupixel.command.commands.ReloadCommand
-import net.eupixel.command.commands.WhereAmICommand
+import net.eupixel.vivlib.command.WhereAmICommand
 import net.minestom.server.MinecraftServer
 
 object CommandManager {
