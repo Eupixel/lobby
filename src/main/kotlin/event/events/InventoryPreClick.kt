@@ -7,8 +7,8 @@ import net.minestom.server.tag.Tag
 class InventoryPreClick(event: InventoryPreClickEvent) {
     init {
         event.isCancelled = true
-        if(event.player.inventory.cursorItem.getTag(Tag.String("navigator")) != null) {
-            Navigator.click(event.player)
+        if(event.clickedItem.getTag(Tag.String("host")) != null) {
+            Navigator.click(event.player, event.clickedItem)
         }
     }
 }

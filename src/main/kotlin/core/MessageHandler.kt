@@ -9,12 +9,17 @@ object MessageHandler {
     fun start() {
         Messenger.bind("0.0.0.0", 2905)
         Messenger.registerTarget("entrypoint", "entrypoint", 2905)
+        Messenger.addRequestHandler("player_online", this::playerOnline)
         Messenger.addListener("queue_join", this::queueJoin)
         Messenger.addListener("queue_leave", this::queueLeave)
         Messenger.addListener("transfer", this::transfer)
         Messenger.addListener("message", this::message)
         Messenger.addListener("action_bar", this::actionBar)
         println("MessageHandler is now running!")
+    }
+
+    fun playerOnline(msg: String): String {
+        return (MinecraftServer.getConnectionManager().findOnlinePlayer(msg) != null).toString()
     }
 
     fun queueJoin(msg: String) {

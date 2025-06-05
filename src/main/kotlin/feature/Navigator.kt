@@ -12,6 +12,7 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.network.packet.server.common.TransferPacket
 import net.minestom.server.tag.Tag
+import java.net.InetAddress
 
 object Navigator {
     fun give(player: Player) {
@@ -33,32 +34,34 @@ object Navigator {
         serversRaw?.let {
             val servers = it.split("#")
             var slot = 53
-            var count = servers.size
             servers.forEach { s ->
                 val parts = s.split("&")
                 val host = parts[0]
                 val port = parts[1]
-                val players = parts[2]
-                val name = miniMessage().deserialize("Lobby-$count").decoration(TextDecoration.ITALIC, false)
-                val item = ItemStack.builder(Material.NETHER_STAR)
+                val id = parts[2]
+                val players = parts[3]
+                val name = miniMessage().deserialize("Lobby-${id.take(4)}").decoration(TextDecoration.ITALIC, false)
+                val baseLore = miniMessage().deserialize(DBTranslator.translate("players_on_lobby", player.locale).replace("<count>", players)).decoration(TextDecoration.ITALIC, false)
+                var item = ItemStack.builder(Material.NETHER_STAR)
                     .customName(name)
-                    .lore(listOf(
-                        miniMessage().deserialize("Players: $players").decoration(TextDecoration.ITALIC, false)
-                    ))
+                    .lore(baseLore)
                     .set(Tag.String("host"), "$host&$port")
                     .build()
+                if(InetAddress.getLocalHost().hostName == id) {
+                    item = item.withLore(listOf(
+                        baseLore,
+                        miniMessage().deserialize(DBTranslator.translate("current_lobby", player.locale)).decoration(TextDecoration.ITALIC, false)
+                    ))
+                }
                 inventory.setItemStack(slot, item)
-                count++
                 slot--
             }
         }
         player.openInventory(inventory)
     }
 
-    fun click(player: Player) {
-        val tag = player.inventory.cursorItem.getTag(Tag.String("host"))
-        if(tag != null) {
-            player.sendPacket(TransferPacket(tag.split("&")[0], tag.split("&")[1].toInt()))
-        }
+    fun click(player: Player, item: ItemStack) {
+        val tag = item.getTag(Tag.String("host"))
+        player.sendPacket(TransferPacket(tag.split("&")[0], tag.split("&")[1].toInt()))
     }
 }
