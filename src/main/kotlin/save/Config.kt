@@ -19,7 +19,6 @@ object Config {
 
     var navigatorType: String = ""
     var heldItem: Byte = 4
-    var chatFormat: String = ""
     var minY: Int = 0
     var spawnPosition: Pos = Pos(0.0, 0.0, 0.0)
     var availableGamemodes: List<String> = listOf()
@@ -28,7 +27,6 @@ object Config {
     fun init() {
         navigatorType = getData("lobby_values", "name", "navigator_type", "data").orEmpty()
         heldItem = getData("lobby_values", "name", "held_item", "data")?.toByte() ?: 4
-        chatFormat = getData("global_values", "name", "chat_format", "data").orEmpty()
         minY = getData("lobby_values", "name", "min_y", "data")?.toInt() ?: 0
         spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
         availableGamemodes = listItems("gamemodes", "friendly_name")
