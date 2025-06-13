@@ -1,9 +1,11 @@
 package net.eupixel.core
 
+import net.eupixel.feature.WhitelistManager
 import net.eupixel.save.Config
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.MinecraftServer
 import net.minestom.server.network.packet.server.common.TransferPacket
+import java.time.Instant
 
 object MessageHandler {
     fun start() {
@@ -15,6 +17,7 @@ object MessageHandler {
         Messenger.addListener("transfer", this::transfer)
         Messenger.addListener("message", this::message)
         Messenger.addListener("action_bar", this::actionBar)
+        Messenger.addListener("add_whitelist", this::addWhitelist)
         println("MessageHandler is now running!")
     }
 
@@ -61,5 +64,14 @@ object MessageHandler {
                 it.sendActionBar(MiniMessage.miniMessage().deserialize(DBTranslator.translate(key, it.locale)))
             }
         }
+    }
+
+    fun addWhitelist(msg: String) {
+        println("add_whitelist raw: $msg")
+        val uuid = msg.split("&")[0]
+        val ip = msg.split("&")[1]
+        val ttl = msg.split("&")[2].toInt()
+        val timestamp = Instant.parse(msg.split("&")[3])
+        WhitelistManager.add(uuid, ip, ttl, timestamp)
     }
 }

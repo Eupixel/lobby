@@ -5,6 +5,7 @@ import kotlinx.coroutines.runBlocking
 import net.eupixel.command.CommandManager
 import net.eupixel.core.DBTranslator
 import net.eupixel.core.MessageHandler
+import net.eupixel.feature.WhitelistManager
 import net.eupixel.event.EventManager
 import net.eupixel.save.Config
 import net.eupixel.vivlib.util.Helper
@@ -14,6 +15,7 @@ import net.minestom.server.instance.anvil.AnvilLoader
 
 fun main() {
     MessageHandler.start()
+    WhitelistManager.start()
     DirectusClient.initFromEnv()
     DBTranslator.loadFromDB()
 
