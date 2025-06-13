@@ -13,6 +13,7 @@ import net.minestom.server.item.Material
 import net.minestom.server.network.packet.server.common.TransferPacket
 import net.minestom.server.tag.Tag
 import java.net.InetAddress
+import java.time.Instant
 
 object Navigator {
     fun give(player: Player) {
@@ -46,6 +47,7 @@ object Navigator {
                     .customName(name)
                     .lore(baseLore)
                     .set(Tag.String("host"), "$host&$port")
+                    .set(Tag.String("id"), id)
                     .build()
                 if(InetAddress.getLocalHost().hostName == id) {
                     item = item.withLore(listOf(
@@ -62,6 +64,8 @@ object Navigator {
 
     fun click(player: Player, item: ItemStack) {
         val tag = item.getTag(Tag.String("host"))
+        val id = item.getTag(Tag.String("id"))
+        Messenger.send(id, "add_whitelist", "${player.uuid}&${player.playerConnection.remoteAddress}&${Config.playerTTL}&${Instant.now()}")
         player.sendPacket(TransferPacket(tag.split("&")[0], tag.split("&")[1].toInt()))
     }
 }

@@ -18,6 +18,7 @@ object Config {
     val queued: MutableSet<String> = mutableSetOf()
 
     var navigatorType: String = ""
+    var playerTTL: Int = 30
     var heldItem: Byte = 4
     var minY: Int = 0
     var spawnPosition: Pos = Pos(0.0, 0.0, 0.0)
@@ -26,6 +27,7 @@ object Config {
 
     fun init() {
         navigatorType = getData("lobby_values", "name", "navigator_type", "data").orEmpty()
+        playerTTL = getData("global_values", "name", "player_ttl", "data")?.toInt()?: 30
         heldItem = getData("lobby_values", "name", "held_item", "data")?.toByte() ?: 4
         minY = getData("lobby_values", "name", "min_y", "data")?.toInt() ?: 0
         spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))
