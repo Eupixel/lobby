@@ -1,7 +1,7 @@
 package net.eupixel.save
 
-import net.eupixel.core.DirectusClient.getData
-import net.eupixel.core.DirectusClient.listItems
+import net.eupixel.vivlib.core.DirectusClient.getData
+import net.eupixel.vivlib.core.DirectusClient.listItems
 import net.eupixel.vivlib.util.Helper.convertToPos
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.coordinate.Pos
@@ -18,7 +18,7 @@ object Config {
     val queued: MutableSet<String> = mutableSetOf()
 
     var navigatorType: String = ""
-    var heldItem: Int = 4
+    var heldItem: Byte = 4
     var chatFormat: String = ""
     var minY: Int = 0
     var spawnPosition: Pos = Pos(0.0, 0.0, 0.0)
@@ -27,7 +27,7 @@ object Config {
 
     fun init() {
         navigatorType = getData("lobby_values", "name", "navigator_type", "data").orEmpty()
-        heldItem = getData("lobby_values", "name", "held_item", "data")?.toInt() ?: 4
+        heldItem = getData("lobby_values", "name", "held_item", "data")?.toByte() ?: 4
         chatFormat = getData("global_values", "name", "chat_format", "data").orEmpty()
         minY = getData("lobby_values", "name", "min_y", "data")?.toInt() ?: 0
         spawnPosition = convertToPos(getData("lobby_values", "name", "spawn_position", "data"))

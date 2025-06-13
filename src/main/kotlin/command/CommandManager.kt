@@ -3,7 +3,6 @@ package net.eupixel.command
 import net.eupixel.command.commands.FlyCommand
 import net.eupixel.command.commands.QueueCommand
 import net.eupixel.command.commands.ReloadCommand
-import net.eupixel.vivlib.command.WhereAmICommand
 import net.minestom.server.MinecraftServer
 
 object CommandManager {
@@ -11,6 +10,5 @@ object CommandManager {
         MinecraftServer.getCommandManager().register(FlyCommand())
         MinecraftServer.getCommandManager().register(QueueCommand())
         MinecraftServer.getCommandManager().register(ReloadCommand())
-        MinecraftServer.getCommandManager().register(WhereAmICommand())
     }
 }

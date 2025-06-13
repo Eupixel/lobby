@@ -1,6 +1,6 @@
 package net.eupixel.event.events
 
-import net.eupixel.feature.WhitelistManager
+import net.eupixel.vivlib.core.WhitelistManager
 import net.eupixel.save.Config
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
 

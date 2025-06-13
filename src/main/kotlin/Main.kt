@@ -1,11 +1,12 @@
 package net.eupixel
 
-import net.eupixel.core.DirectusClient
+import core.Vivlib
+import net.eupixel.vivlib.core.DirectusClient
 import kotlinx.coroutines.runBlocking
 import net.eupixel.command.CommandManager
-import net.eupixel.core.DBTranslator
+import net.eupixel.vivlib.core.DBTranslator
 import net.eupixel.core.MessageHandler
-import net.eupixel.feature.WhitelistManager
+import net.eupixel.vivlib.core.WhitelistManager
 import net.eupixel.event.EventManager
 import net.eupixel.save.Config
 import net.eupixel.vivlib.util.Helper
@@ -18,6 +19,7 @@ fun main() {
     WhitelistManager.start()
     DirectusClient.initFromEnv()
     DBTranslator.loadFromDB()
+    Vivlib.init()
 
     runBlocking {
         if (DirectusClient.downloadFile("worlds", "name", "lobby", "world_data", "lobby.zip")) {

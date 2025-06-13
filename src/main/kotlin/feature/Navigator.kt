@@ -1,8 +1,8 @@
 package net.eupixel.feature
 
-import net.eupixel.core.DBTranslator
-import net.eupixel.core.Messenger
 import net.eupixel.save.Config
+import net.eupixel.vivlib.core.DBTranslator
+import net.eupixel.vivlib.core.Messenger
 import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.minimessage.MiniMessage.miniMessage
 import net.minestom.server.entity.Player

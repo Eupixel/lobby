@@ -1,9 +1,9 @@
 package net.eupixel.command.commands
 
-import net.eupixel.core.DBTranslator
+import net.eupixel.vivlib.core.DBTranslator
 import net.eupixel.feature.Navigator
 import net.eupixel.save.Config
-import net.eupixel.util.PrefixLoader
+import net.eupixel.vivlib.util.PrefixLoader
 import net.eupixel.vivlib.util.Permissions
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.MinecraftServer

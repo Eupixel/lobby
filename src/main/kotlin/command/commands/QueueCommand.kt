@@ -1,7 +1,7 @@
 package net.eupixel.command.commands
 
-import net.eupixel.core.DBTranslator
-import net.eupixel.core.Messenger
+import net.eupixel.vivlib.core.DBTranslator
+import net.eupixel.vivlib.core.Messenger
 import net.eupixel.save.Config
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minestom.server.command.builder.Command
