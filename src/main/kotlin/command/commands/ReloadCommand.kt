@@ -2,7 +2,6 @@ package net.eupixel.command.commands
 
 import core.Vivlib
 import net.eupixel.vivlib.core.DBTranslator
-import net.eupixel.feature.Navigator
 import net.eupixel.save.Config
 import net.eupixel.vivlib.util.PrefixLoader
 import net.eupixel.vivlib.util.Permissions
@@ -24,11 +23,9 @@ class ReloadCommand : Command("reload") {
                 Permissions.refreshAll()
                 MinecraftServer.getConnectionManager().onlinePlayers.forEach {
                     it.refreshCommands()
-                    it.inventory.clear()
-                    Navigator.give(it)
                     PrefixLoader.loadPrefix(it)
-                    Vivlib.reload()
                 }
+                Vivlib.reload()
             }
             val formatted = String.format(Locale.US, "%.2f", ms / 1000.0)
             sender.sendMessage(MiniMessage.miniMessage().deserialize("Reloaded! (in $formatted s)"))
