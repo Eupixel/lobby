@@ -1,6 +1,6 @@
 package net.eupixel
 
-import core.Vivlib
+import net.eupixel.vivlib.core.Vivlib
 import net.eupixel.vivlib.core.DirectusClient
 import kotlinx.coroutines.runBlocking
 import net.eupixel.command.CommandManager
