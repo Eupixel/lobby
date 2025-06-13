@@ -65,7 +65,7 @@ object Navigator {
     fun click(player: Player, item: ItemStack) {
         val tag = item.getTag(Tag.String("host"))
         val id = item.getTag(Tag.String("id"))
-        Messenger.send(id, "add_whitelist", "${player.uuid}&${player.playerConnection.remoteAddress}&${Config.playerTTL}&${Instant.now()}")
+        Messenger.send(id, "add_whitelist", "${player.uuid}&${Config.playerTTL}&${Instant.now()}")
         player.sendPacket(TransferPacket(tag.split("&")[0], tag.split("&")[1].toInt()))
     }
 }
