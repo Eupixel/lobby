@@ -10,14 +10,13 @@ object MessageHandler {
         println("MessageHandler is now running!")
     }
 
-    fun queueJoin(msg: String) {
-        val username = msg.split("&")[0]
-        if(!Config.queued.contains(username)) {
-            Config.queued.add(username)
+    fun queueJoin(uuid: String) {
+        if(!Config.queued.contains(uuid)) {
+            Config.queued.add(uuid)
         }
     }
 
-    fun queueLeave(player: String) {
-        Config.queued.remove(player)
+    fun queueLeave(uuid: String) {
+        Config.queued.remove(uuid)
     }
 }
